@@ -2,7 +2,11 @@ package me.glaremasters.mergedrops;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -30,9 +34,27 @@ public class Listener implements org.bukkit.event.Listener {
             }
         }
         event.getDrops().clear();
+
         for (Material material : materials.keySet()) {
             ItemStack drops = new ItemStack(material, materials.get(material));
             event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), drops);
+            if (MergeDrops.getInstance().getConfig().getBoolean("show-holograms")) {
+                Location loc = event.getEntity().getLocation().clone();
+                loc.setY(event.getEntity().getLocation().getY() - 1);
+                ArmorStand as = (ArmorStand) event.getEntity().getWorld()
+                        .spawnEntity(loc, EntityType.ARMOR_STAND);
+
+                as.setGravity(false);
+                as.setCanPickupItems(false);
+                as.setCustomName(
+                        Integer.toString(drops.getAmount()) + "x " + drops.getType().toString());
+                as.setCustomNameVisible(true);
+                as.setVisible(false);
+
+                Bukkit.getServer().getScheduler()
+                        .runTaskLater(MergeDrops.getInstance(), () -> as.remove(), 20 * 10);
+            }
+
         }
 
     }

@@ -16,6 +16,7 @@ public class MergeDrops extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+        saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new Listener(), this);
     }
 
