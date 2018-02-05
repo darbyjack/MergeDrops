@@ -10,6 +10,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class MobDeathEvent implements Listener {
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onMobDeath(EntityDeathEvent event) {
         Map<Material, Integer> materials = new HashMap<>();
         if (!(event.getEntity() instanceof Monster)) {
