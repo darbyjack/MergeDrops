@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Material;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,6 +23,9 @@ public class MobDeathEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMobDeath(EntityDeathEvent event) {
         Map<Material, Integer> materials = new HashMap<>();
+        if (!(event.getEntity() instanceof Monster)) {
+            return;
+        }
         int total = 0;
         for (ItemStack drops : event.getDrops()) {
             total += drops.getAmount();
