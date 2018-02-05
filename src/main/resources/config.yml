@@ -1,4 +1,2 @@
-show-holograms: false
-
 updater:
   check: true

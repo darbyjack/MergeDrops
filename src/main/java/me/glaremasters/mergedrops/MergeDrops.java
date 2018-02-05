@@ -26,11 +26,13 @@ public class MergeDrops extends JavaPlugin {
             try {
                 if (updater.checkForUpdates()) {
                     getLogger()
-                            .warning("You appear to be running a version other than our latest stable release."
-                                    + " You can download our newest version at: " + updater
-                                    .getResourceURL());
+                            .warning(
+                                    "You appear to be running a version other than our latest stable release."
+                                            + " You can download our newest version at: " + updater
+                                            .getResourceURL());
                 } else {
-                    getLogger().warning("You are currently the latest version of the plugin! - " + getDescription().getVersion());
+                    getLogger().warning("You are currently the latest version of the plugin! - "
+                            + getDescription().getVersion());
                 }
             } catch (Exception e) {
                 getLogger().info("Could not check for updates! Stacktrace:");
