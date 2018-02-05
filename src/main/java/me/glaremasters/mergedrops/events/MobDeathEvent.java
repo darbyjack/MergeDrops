@@ -1,7 +1,8 @@
-package me.glaremasters.mergedrops;
+package me.glaremasters.mergedrops.events;
 
 import java.util.HashMap;
 import java.util.Map;
+import me.glaremasters.mergedrops.MergeDrops;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,13 +10,14 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by GlareMasters on 12/26/2017.
  */
-public class Listener implements org.bukkit.event.Listener {
+public class MobDeathEvent implements Listener {
 
 
     @EventHandler
