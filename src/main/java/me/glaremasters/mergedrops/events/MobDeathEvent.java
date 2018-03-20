@@ -1,18 +1,18 @@
 package me.glaremasters.mergedrops.events;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by GlareMasters on 12/26/2017.
@@ -53,7 +53,7 @@ public class MobDeathEvent implements Listener {
     }
 
     @EventHandler
-    public void onPickup(EntityPickupItemEvent event) {
+    public void onPickup(PlayerPickupItemEvent event) {
         ItemStack item = event.getItem().getItemStack();
         if (!item.hasItemMeta() || !item.getItemMeta().hasLore()) {
             return;
@@ -63,15 +63,11 @@ public class MobDeathEvent implements Listener {
         if (check.startsWith("MergeDrops")) {
             String[] values = check.split(" ");
             int amount = Integer.parseInt(values[1]);
-            if (event.getEntity() instanceof Player) {
-                Player player = ((Player) event.getEntity()).getPlayer();
-                ItemStack updatedItem = new ItemStack(
-                        Material.getMaterial(event.getItem().getItemStack().getType().toString()),
-                        amount);
-                player.getInventory().addItem(updatedItem);
-                event.setCancelled(true);
-                event.getItem().remove();
-            }
+            ItemStack updatedItem = new ItemStack(
+                    Material.getMaterial(event.getItem().getItemStack().getType().toString()),
+                    amount);
+            event.getPlayer().getInventory().addItem(updatedItem);
+            event.setCancelled(true);
 
         }
     }
