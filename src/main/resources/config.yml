@@ -1,2 +1,6 @@
 updater:
   check: true
+
+# List here all the materials you want to be merged.
+materials:
+- "BLAZE_ROD"

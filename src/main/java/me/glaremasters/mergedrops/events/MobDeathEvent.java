@@ -1,7 +1,9 @@
 package me.glaremasters.mergedrops.events;
 
+import me.glaremasters.mergedrops.MergeDrops;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,9 +27,15 @@ public class MobDeathEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMobDeath(EntityDeathEvent event) {
+        FileConfiguration config = MergeDrops.getInstance().getConfig();
         Map<Material, Integer> materials = new HashMap<>();
         if (!(event.getEntity() instanceof Monster)) {
             return;
+        }
+        for (ItemStack dropName : event.getDrops()) {
+            if (config.getStringList("materials").contains(dropName.getType().toString())) {
+                return;
+            }
         }
         int total = 0;
         for (ItemStack drops : event.getDrops()) {
