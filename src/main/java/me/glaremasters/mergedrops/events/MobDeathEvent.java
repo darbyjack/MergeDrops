@@ -1,7 +1,9 @@
 package me.glaremasters.mergedrops.events;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import me.glaremasters.mergedrops.MergeDrops;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Monster;
@@ -14,10 +16,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by GlareMasters on 12/26/2017.
@@ -32,15 +30,13 @@ public class MobDeathEvent implements Listener {
         if (!(event.getEntity() instanceof Monster)) {
             return;
         }
-        for (ItemStack dropName : event.getDrops()) {
-            if (config.getStringList("materials").contains(dropName.getType().toString())) {
-                return;
-            }
-        }
         int total = 0;
         for (ItemStack drops : event.getDrops()) {
             total += drops.getAmount();
-            materials.put(drops.getType(), total);
+            if (config.getStringList("materials").contains(drops.getType().toString())) {
+                materials.put(drops.getType(), total);
+            }
+
         }
         event.getDrops().clear();
 
@@ -102,7 +98,8 @@ public class MobDeathEvent implements Listener {
                     lore.add(null);
                     im.setLore(lore);
                     event.getItem().setItemMeta(im);
-                    ItemStack updatedItem = new ItemStack(Material.getMaterial(event.getItem().getType().toString()), amount);
+                    ItemStack updatedItem = new ItemStack(
+                            Material.getMaterial(event.getItem().getType().toString()), amount);
                     event.getDestination().addItem(updatedItem);
 
                 }
