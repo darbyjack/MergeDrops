@@ -68,7 +68,7 @@ public class MobDeathEvent implements Listener {
                     amount);
             event.getPlayer().getInventory().addItem(updatedItem);
             event.setCancelled(true);
-
+            event.getItem().remove();
         }
     }
 }
