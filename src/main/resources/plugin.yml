@@ -1,0 +1,5 @@
+name: MergeDrops
+version: ${project.version}
+main: me.glaremasters.mergedrops.Mergedrops
+authors: [blockslayer22]
+description: MergeDrops
